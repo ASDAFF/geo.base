@@ -1,12 +1,8 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@reaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
 
-$MESS["REASPEKT_GEOBASE_ACTIVE_CITY_TRUE"]   = "Да";
-$MESS["REASPEKT_GEOBASE_ACTIVE_CITY_FALSE"]  = "Нет";
-$MESS['REASPEKT_TABLE_CITY_DELETE']	= "Удалить";
+$MESS["GEOBASE_ACTIVE_CITY_TRUE"]   = "Да";
+$MESS["GEOBASE_ACTIVE_CITY_FALSE"]  = "Нет";
+$MESS['TABLE_CITY_DELETE']	= "Удалить";

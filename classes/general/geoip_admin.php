@@ -1,10 +1,6 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@reaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Config\Option;
@@ -14,7 +10,7 @@ use Bitrix\Main\Web\Cookie;
 Loc::loadMessages(__FILE__);
 
 class ReaspAdminGeoIP {
-    const MID = "reaspekt.geobase";
+    const MID = "geo.base";
     
     function GetCitySelected() {
         
@@ -114,11 +110,11 @@ class ReaspAdminGeoIP {
         $arCity = ReaspGeoIP::SelectCityId($city_id);
         
         if ($arCity["ID"]) {
-            //Ñìîòðèì íàñòðîéêè ìîäóëÿ
+            //Ð¡Ð¼Ð¾Ñ‚Ñ€Ð¸Ð¼ Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸ Ð¼Ð¾Ð´ÑƒÐ»Ñ
             $reaspekt_city_manual_default = Option::get(self::MID, "reaspekt_city_manual_default");
             $ar_reaspekt_city_manual_default = unserialize($reaspekt_city_manual_default);
             $ar_reaspekt_city_manual_default[] = $arCity["ID"];
-            //Óáèðàåì äóáëè
+            //Ð£Ð±Ð¸Ñ€Ð°ÐµÐ¼ Ð´ÑƒÐ±Ð»Ð¸
             $ar_reaspekt_city_manual_default = array_unique($ar_reaspekt_city_manual_default);
             $reaspekt_city_manual_default = serialize($ar_reaspekt_city_manual_default);
             Option::set(self::MID, "reaspekt_city_manual_default", $reaspekt_city_manual_default);
@@ -137,14 +133,14 @@ class ReaspAdminGeoIP {
         $strCityDefaultTR = "";
         
         foreach ($ar_reaspekt_city_manual_default as $idCity) {
-            $strCityDefaultTR .= '<tr class="reaspekt_geobase_city_line">';
+            $strCityDefaultTR .= '<tr class="geo_base_city_line">';
             $strCityDefaultTR .= "<td>" . $arCityData[$idCity]["ID"] . "</td>";
             $strCityDefaultTR .= "<td>" . $arCityData[$idCity]["UF_XML_ID"] . "</td>";
-            $strCityDefaultTR .= "<td>" . (($arCityData[$idCity]["UF_ACTIVE"]) ? Loc::getMessage("REASPEKT_GEOBASE_ACTIVE_CITY_TRUE") : Loc::getMessage("REASPEKT_GEOBASE_ACTIVE_CITY_FALSE")) . "</td>";
+            $strCityDefaultTR .= "<td>" . (($arCityData[$idCity]["UF_ACTIVE"]) ? Loc::getMessage("GEOBASE_ACTIVE_CITY_TRUE") : Loc::getMessage("GEOBASE_ACTIVE_CITY_FALSE")) . "</td>";
             $strCityDefaultTR .= "<td>" . $arCityData[$idCity]["CITY"] . "</td>";
             $strCityDefaultTR .= "<td>" . $arCityData[$idCity]["REGION"] . "</td>";
             $strCityDefaultTR .= "<td>" . $arCityData[$idCity]["OKRUG"] . "</td>";
-            $strCityDefaultTR .= '<td><input type="submit" name="reaspekt_geobase_del_'.$idCity.'" value="'.GetMessage("REASPEKT_TABLE_CITY_DELETE").'" onclick="reaspekt_geobase_delete_click('.$idCity.');return false;"></td>';
+            $strCityDefaultTR .= '<td><input type="submit" name="geo_base_del_'.$idCity.'" value="'.GetMessage("TABLE_CITY_DELETE").'" onclick="geo_base_delete_click('.$idCity.');return false;"></td>';
             $strCityDefaultTR .= "</tr>";
         }
         

@@ -1,10 +1,6 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@reaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
 use \Bitrix\Main\Application;
 use \Bitrix\Main\Config\Option;
@@ -45,7 +41,7 @@ if (method_exists(CModule, "AddAutoloadClasses")) {
 
 class ReaspGeoBaseLoad {
 	
-	const MID = "reaspekt.geobase";
+	const MID = "geo.base";
     
     function OnPrologHandler() {
 		global $APPLICATION;

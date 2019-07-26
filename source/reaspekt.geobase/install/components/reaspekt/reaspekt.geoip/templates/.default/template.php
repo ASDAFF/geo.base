@@ -2,7 +2,7 @@
 <?$frame = $this->createFrame()->begin();?>
 <?if($arResult["GEO_CITY"]):
 
-    //Ïóòü äî ôàéëîâ îáðàáîò÷èêîâ
+    //ÐŸÑƒÑ‚ÑŒ Ð´Ð¾ Ñ„Ð°Ð¹Ð»Ð¾Ð² Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸ÐºÐ¾Ð²
     $arJSParams = array(
         "AJAX_URL" => array(
             "SELECT" => $templateFolder . "/ajax_select_city.php",

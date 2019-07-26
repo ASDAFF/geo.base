@@ -1,4 +1,8 @@
 <?
+/**
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
+ */
+
 define('NO_KEEP_STATISTIC', true);
 define('NO_AGENT_STATISTIC', true);
 define('NO_AGENT_CHECK', true);
@@ -10,7 +14,7 @@ use Bitrix\Main\Application;
 
 Loc::loadMessages(__FILE__);
 
-$module_id = "reaspekt.geobase";
+$module_id = "geo.base";
 
 if (!CModule::IncludeModule($module_id)) {
     ShowError("Error! Module no install");
@@ -24,7 +28,7 @@ $strCityName = htmlspecialchars(trim($request->getPost("city_name")));
 if(strlen($strCityName) >= 2):
     $arCity = ReaspGeoIP::SelectQueryCity($strCityName);
     
-    //ïğåäåëèëñ¤ ãîğîä ïî óìîë÷àíèş
+    //ÑœĞ¿Ñ€ĞµĞ´ĞµĞ»Ğ¸Ğ»ÑÂ¤ Ğ³Ğ¾Ñ€Ğ¾Ğ´ Ğ¿Ğ¾ ÑƒĞ¼Ğ¾Ğ»Ñ‡Ğ°Ğ½Ğ¸Ñ
     $arData = ReaspGeoIP::GetAddr();
 ?>
 
@@ -37,7 +41,7 @@ if(strlen($strCityName) >= 2):
             <?if($arData["CITY"] == $valCity["CITY"]):?>
             <strong><?=$valCity["CITY"]?></strong>
             <?else:?>
-            <a onclick="objJCReaspektGeobase.onClickReaspektGeobase('<?=$valCity["CITY"]?>'); return false;" id="reaspekt_geobase_list_<?=$cell?>" title="<?=$valCity["CITY"]?>" href="javascript:void(0);">
+            <a onclick="objJCReaspektGeobase.onClickReaspektGeobase('<?=$valCity["CITY"]?>'); return false;" id="geo_base_list_<?=$cell?>" title="<?=$valCity["CITY"]?>" href="javascript:void(0);">
             <?=ReaspGeoIP::StrReplaceStrongSearchCity($strCityName, $strCityName, $valCity["CITY"]);?>, <?=$valCity["REGION"]?></a>
             <?endif;?>
         </div>
@@ -45,6 +49,6 @@ if(strlen($strCityName) >= 2):
             $cell++;
         endforeach;?>
 	<?else:?>
-        <div class="reaspektNotFound"><?=Loc::getMessage("REASPEKT_RESULT_CITY_NOT_FOUND");?></div>
+        <div class="reaspektNotFound"><?=Loc::getMessage("RESULT_CITY_NOT_FOUND");?></div>
 	<?endif?>
 <?endif;?>

@@ -1,10 +1,6 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@reaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
 
 use Bitrix\Main\Localization\Loc;
@@ -12,7 +8,7 @@ use Bitrix\Main\Config\Option;
 
 CUtil::InitJSCore(array("jquery", "window"));
 
-$module_id = "reaspekt.geobase";
+$module_id = "geo.base";
 $reaspekt_city_manual_default = Option::get($module_id, "reaspekt_city_manual_default");
 
 Loc::loadMessages($_SERVER["DOCUMENT_ROOT"].BX_ROOT."/modules/main/options.php");
@@ -25,8 +21,8 @@ if ($APPLICATION->GetGroupRight($module_id) < "S") {
 $request = \Bitrix\Main\HttpApplication::getInstance()->getContext()->getRequest();
 
 $use_source = array(
-	"not_using" => Loc::getMessage("REASPEKT_GEOBASE_NOT_USING"),
-	"local_db" => Loc::getMessage("REASPEKT_GEOBASE_LOCAL_DB"),
+	"not_using" => Loc::getMessage("GEOBASE_NOT_USING"),
+	"local_db" => Loc::getMessage("GEOBASE_LOCAL_DB"),
 );
 
 global $DB;
@@ -37,7 +33,7 @@ function ShowParamsHTMLByArray($arParams)
 {
 	foreach ($arParams as $Option)
 	{
-		__AdmSettingsDrawRow("reaspekt.geobase", $Option);
+		__AdmSettingsDrawRow("geo.base", $Option);
 	}
 }
 
@@ -45,16 +41,16 @@ function ShowParamsHTMLByArray($arParams)
 $aTabs = array(
     array(
         'DIV' => 'edit1',
-        'TAB' => Loc::getMessage('REASPEKT_GEOBASE_TAB_SETTINGS')
+        'TAB' => Loc::getMessage('GEOBASE_TAB_SETTINGS')
     ),
 	array(
         "DIV" => "edit2",
-        "TAB" => Loc::getMessage("REASPEKT_GEOBASE_TAB_CITY_NAME")
+        "TAB" => Loc::getMessage("GEOBASE_TAB_CITY_NAME")
     ),
 	array(
 		"DIV"	=> "edit3",
-		"TAB"	=> Loc::getMessage("REASPEKT_GEOBASE_TAB_UPDATE_BD"),
-		"TITLE" => Loc::getMessage("REASPEKT_TAB_TITLE_DATA")
+		"TAB"	=> Loc::getMessage("GEOBASE_TAB_UPDATE_BD"),
+		"TITLE" => Loc::getMessage("TAB_TITLE_DATA")
 	),
     array(
         "DIV" => "edit4",
@@ -67,20 +63,20 @@ $arAllOptions = array(
 	"edit1" => array(
         array(
             'reaspekt_set_local_sql', 
-            Loc::getMessage('REASPEKT_GEOBASE_FIELD_SET_SQL'),
+            Loc::getMessage('GEOBASE_FIELD_SET_SQL'),
             'local_db',
             array('selectbox',$use_source)
         ),
 		array(
             'reaspekt_enable_jquery', 
-            Loc::getMessage('REASPEKT_GEOBASE_JQUERY'),
+            Loc::getMessage('GEOBASE_JQUERY'),
             'Y',
             array('checkbox')
         ),
 	),
     "edit2" => $arCityOption,
     "edit3" => array(
-		array("reaspekt_set_timeout", Loc::getMessage("REASPEKT_GEOBASE_SET_TIMEOUT"), 3, array("text"))
+		array("reaspekt_set_timeout", Loc::getMessage("GEOBASE_SET_TIMEOUT"), 3, array("text"))
 	),
 );
 
@@ -89,9 +85,9 @@ $reaspekt_set_local_sql = (($request->isPost() && check_bitrix_sessid()) ? $requ
 
 
 if ($reaspekt_set_local_sql != "local_db") {
-    $arAllOptions["edit1"][] = Loc::getMessage("REASPEKT_GEOBASE_ELIB_TITLE");
-    $arAllOptions["edit1"][] = array("reaspekt_elib_site_code", Loc::getMessage("REASPEKT_GEOBASE_CODE_FOR"), "", array("text"));
-    $arAllOptions["edit1"][] = Loc::getMessage("REASPEKT_GEOBASE_DESC_CODE_ELIB");
+    $arAllOptions["edit1"][] = Loc::getMessage("GEOBASE_ELIB_TITLE");
+    $arAllOptions["edit1"][] = array("reaspekt_elib_site_code", Loc::getMessage("GEOBASE_CODE_FOR"), "", array("text"));
+    $arAllOptions["edit1"][] = Loc::getMessage("GEOBASE_DESC_CODE_ELIB");
 }
 
 $tabControl = new CAdminTabControl('tabControl', $aTabs);
@@ -104,7 +100,7 @@ if (
 ) {
     
     if(strlen($RestoreDefaults) > 0) {
-		Option::delete("reaspekt.geobase");
+		Option::delete("geo.base");
 	} else {
 		foreach ($aTabs as $aTab) {
             
@@ -179,22 +175,22 @@ if (
 	height: 15px;
 	background: #637f9c;
 }
-.reaspekt_geobase_light{
+.geo_base_light{
 	color: #3377EE;
 }
-#reaspekt_geobase_info{
+#geo_base_info{
 	display: none;
 	margin-bottom: 15px;
 	margin-top: 1px;
 	width: 75%;
 }
-#reaspekt_geobase_info option{
+#geo_base_info option{
 	padding: 3px 6px;
 }
-#reaspekt_geobase_info option:hover{
+#geo_base_info option:hover{
 	background-color: #D6D6D6;
 }
-td #reaspekt_geobase_btn{
+td #geo_base_btn{
 	margin: 10px 0px 80px;
 }
 #reaspekt_description_full{
@@ -213,7 +209,7 @@ td #reaspekt_geobase_btn{
 .reaspekt_gb_uf_edit{
 	background-color: #d7e3e7;
 	background: -moz-linear-gradient(center bottom , #d7e3e7, #fff);
-	background-image: url("/bitrix/images/reaspekt.geobase/correct.gif");
+	background-image: url("/bitrix/images/geo.base/correct.gif");
 	background-position: right 20px center;
 	background-repeat: no-repeat;
 	color: #3f4b54;
@@ -235,22 +231,22 @@ td #reaspekt_geobase_btn{
 }
 .reaspekt_gb_uf_edit:hover{
 	background: #f3f6f7 -moz-linear-gradient(center top , #f8f8f9, #f2f6f8) repeat scroll 0 0;
-	background-image: url("/bitrix/images/reaspekt.geobase/correct.gif");
+	background-image: url("/bitrix/images/geo.base/correct.gif");
 	background-position: right 20px center;
 	background-repeat: no-repeat;
 }
-#reaspekt_geobase_table_header td{
+#geo_base_table_header td{
     text-align: left !important;
 }
 </style>
 
 <script language="JavaScript">
 $(document).ready(function(){
-	$('#reaspektOptionManualUpdate').html("<?=Loc::getMessage("REASPEKT_CHECK_UPDATES")?>");
+	$('#reaspektOptionManualUpdate').html("<?=Loc::getMessage("CHECK_UPDATES")?>");
 
 	$.ajax({
 		type: "POST",
-		url: "/bitrix/admin/reaspekt_geobase_file_check.php",
+		url: "/bitrix/admin/geo_base_file_check.php",
 		timeout: 10000,
 		success: function(data){
 			if(data == ''){
@@ -260,9 +256,9 @@ $(document).ready(function(){
 			}
 			objData = JSON.parse(data);
 			if(objData.IPGEOBASE == 1){
-				BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', {'action':'UPDATE'}, obHandler);
+				BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', {'action':'UPDATE'}, obHandler);
 			} else {
-				document.getElementById('reaspektOptionNotices').innerHTML = "<?=Loc::getMessage("REASPEKT_GEOBASE_URL_NOT_FOUND")?>";
+				document.getElementById('reaspektOptionNotices').innerHTML = "<?=Loc::getMessage("GEOBASE_URL_NOT_FOUND")?>";
 				$('#reaspektOptionManualUpdate').hide();
 				$('#reaspektOptionUpdateUI').hide();
 			}
@@ -291,8 +287,8 @@ obHandler = function (data) {
 		progress.style.width = obData.PROGRESS + '%';
 		value.innerHTML = obData.PROGRESS + '%';
 		if(typeof obData.FILENAME != 'undefined')
-			title.innerHTML = "<?=Loc::getMessage("REASPEKT_TITLE_LOAD_FILE")?> " + obData.FILENAME;
-		BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, obHandler);
+			title.innerHTML = "<?=Loc::getMessage("TITLE_LOAD_FILE")?> " + obData.FILENAME;
+		BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, obHandler);
 	
     } else if (obData.STATUS == 2) {
 		send = {
@@ -309,16 +305,16 @@ obHandler = function (data) {
 		
         if (obData.PROGRESS == 100) {
 			timer = setInterval(function (){
-				title.innerHTML = "<?=Loc::getMessage("REASPEKT_TITLE_UNPACK_FILE")?> " + (typeof obData.FILENAME != 'undefined' ? obData.FILENAME : '');
+				title.innerHTML = "<?=Loc::getMessage("TITLE_UNPACK_FILE")?> " + (typeof obData.FILENAME != 'undefined' ? obData.FILENAME : '');
 				progress.style.width = 0 + '%';
 				value.innerHTML = 0 + '%';
-				BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, obHandler);
+				BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, obHandler);
 				clearInterval(timer);
 			}, 500);
 		} else {
-			BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, obHandler);
+			BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, obHandler);
 			if(typeof obData.FILENAME != 'undefined')
-				title.innerHTML = "<?=Loc::getMessage("REASPEKT_TITLE_LOAD_FILE")?> " + obData.FILENAME;
+				title.innerHTML = "<?=Loc::getMessage("TITLE_LOAD_FILE")?> " + obData.FILENAME;
 		}
 	}
 	else if (obData.STATUS == 1) {
@@ -335,19 +331,19 @@ obHandler = function (data) {
 		
         if (obData.PROGRESS == 100) {
 			timer = setInterval(function (){
-				title.innerHTML = "<?=Loc::getMessage("REASPEKT_TITLE_DB_UPDATE")?>";
+				title.innerHTML = "<?=Loc::getMessage("TITLE_DB_UPDATE")?>";
 				progress.style.width = 0 + '%';
 				value.innerHTML		 = 0 + '%';
-				BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, obHandler);
+				BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, obHandler);
 				clearInterval(timer);
 			}, 500);
 		} else {
-			BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, obHandler);
+			BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, obHandler);
 		}
 	}
 	else if (obData.STATUS == 0) {
 		loader.style.display = 'none';
-		notices.innerHTML = "<?=Loc::getMessage("REASPEKT_NOTICE_DBUPDATE_SUCCESSFUL")?>";
+		notices.innerHTML = "<?=Loc::getMessage("NOTICE_DBUPDATE_SUCCESSFUL")?>";
 
 		notices.style.display = 'block';
 	}
@@ -358,7 +354,7 @@ obHandler = function (data) {
 			document.getElementById('reaspektOptionManualUpdate').style.display = 'none';
 		}
 	} else if (obData.UPDATE == "N") {
-		notices.innerHTML = "<?=Loc::getMessage("REASPEKT_NOTICE_UPDATE_NOT_AVAILABLE")?>";
+		notices.innerHTML = "<?=Loc::getMessage("NOTICE_UPDATE_NOT_AVAILABLE")?>";
         
 		if(!$('#dbupdater').is(':visible'))
 			document.getElementsByName('reaspekt_set_timeout')[0].readOnly = true;
@@ -372,14 +368,14 @@ function updateDB(dst) {
 	
     document.getElementById('reaspektOptionNotices').style.display = 'none';
     document.getElementById('reaspektOptionLoaderUI').style.display = 'block';
-    BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php',
+    BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php',
         {'action': 'LOAD', "timeout": document.getElementsByName('reaspekt_set_timeout')[0].value}, obHandler);
 }
 
-var reaspekt_geobase = new Object();
-reaspekt_geobase = {'letters':'', 'timer':'0'};
+var geo_base = new Object();
+geo_base = {'letters':'', 'timer':'0'};
 
-function reaspekt_geobase_delete_click(cityid) {
+function geo_base_delete_click(cityid) {
 	var id = '';
 	if(typeof cityid !== 'undefined')
 		id = cityid;
@@ -388,46 +384,46 @@ function reaspekt_geobase_delete_click(cityid) {
 
 	$.ajax({
 		type: "POST",
-		url: "/bitrix/admin/reaspekt_geobase_selected.php",
+		url: "/bitrix/admin/geo_base_selected.php",
 		dataType: 'json',
 		data: { 'sessid': BX.message('bitrix_sessid'),
 				'entry_id': id,
 				'delete_city': 'Y'},
 		timeout: 10000,
 		success: function(data){
-			reaspekt_geobase_update_table();
+			geo_base_update_table();
 		}
 	});
 }
 
-function reaspekt_geobase_update_table() {
+function geo_base_update_table() {
 	$.ajax({
 		type: "POST",
-		url: "/bitrix/admin/reaspekt_geobase_selected.php",
+		url: "/bitrix/admin/geo_base_selected.php",
 		dataType: 'html',
 		data: { 'sessid': BX.message('bitrix_sessid'),
 			'update': 'Y'},
 		timeout: 10000,
 		success: function(data){
-			$('#reaspekt_geobase_cities_table .reaspekt_geobase_city_line').empty().remove();
-			$('#reaspekt_geobase_cities_table').append(data);
+			$('#geo_base_cities_table .geo_base_city_line').empty().remove();
+			$('#geo_base_cities_table').append(data);
 		}
 	});
 }
 
-function reaspekt_geobase_onclick(cityid){ // click button "Add"
+function geo_base_onclick(cityid){ // click button "Add"
 	var id = '';
-	if(typeof cityid == 'undefined' && $('#reaspekt_geobase_btn').prop('disabled')==true && cityid != 'Enter')
+	if(typeof cityid == 'undefined' && $('#geo_base_btn').prop('disabled')==true && cityid != 'Enter')
 		return false;
 	if(typeof cityid !== 'undefined' && cityid != 'Enter')
 		id = cityid;
-	else if(typeof reaspekt_geobase.selected_id !== 'undefined'){
-		id = reaspekt_geobase.selected_id;
+	else if(typeof geo_base.selected_id !== 'undefined'){
+		id = geo_base.selected_id;
 	}
 
 	$.ajax({
 		type: "POST",
-		url: "/bitrix/admin/reaspekt_geobase_selected.php",
+		url: "/bitrix/admin/geo_base_selected.php",
 		dataType: 'json',
 		data: { 'sessid': BX.message('bitrix_sessid'),
 			'city_id': id,
@@ -435,15 +431,15 @@ function reaspekt_geobase_onclick(cityid){ // click button "Add"
 		},
 		timeout: 10000,
 		success: function(data){
-			var list = $('select#reaspekt_geobase_info');
+			var list = $('select#geo_base_info');
 			list.html('');
 			if(data == '' || data == null)
 				list.animate({ height: 'hide' }, "fast");
 			else{
 				if(data >= 0){
-					$('#reaspekt_geobase_btn').prop('disabled',true);
-					$('input#reaspekt_geobase_search').val('');
-					reaspekt_geobase_update_table();
+					$('#geo_base_btn').prop('disabled',true);
+					$('input#geo_base_search').val('');
+					geo_base_update_table();
 				}
 			}
 		}
@@ -451,33 +447,33 @@ function reaspekt_geobase_onclick(cityid){ // click button "Add"
 	return false;
 }
 
-function reaspekt_geobase_select_change(event){
+function geo_base_select_change(event){
 	t = event.target || event.srcElement;
 	var sel = t.options[t.selectedIndex];
-	$('input#reaspekt_geobase_search').val(reaspekt_geobase.letters = BX.util.trim(sel.value));
+	$('input#geo_base_search').val(geo_base.letters = BX.util.trim(sel.value));
 	var id = sel.id.substr(20);
-	reaspekt_geobase.selected_id = id;
+	geo_base.selected_id = id;
 }
 
-function reaspekt_geobase_select_sizing(){
-	var count = $("select#reaspekt_geobase_info option").size();
+function geo_base_select_sizing(){
+	var count = $("select#geo_base_info option").size();
 	if (count < 2)
-		$("select#reaspekt_geobase_info").attr('size', count+1);
+		$("select#geo_base_info").attr('size', count+1);
 	else if (count < 20)
-		$("select#reaspekt_geobase_info").attr('size', count);
+		$("select#geo_base_info").attr('size', count);
 	else
-		$("select#reaspekt_geobase_info").attr('size', 20);
+		$("select#geo_base_info").attr('size', 20);
 }
 
 $(function(){
 	$(document).click(function(event){
-		var search = $('input#reaspekt_geobase_search');
-		if($(event.target).closest("#reaspekt_geobase_info").length) return;
-		$("#reaspekt_geobase_info").animate({ height: 'hide' }, "fast");
-		if(search.val() == '' && !$('#reaspekt_geobase_btn').prop('disabled'))
-				$('#reaspekt_geobase_btn').prop('disabled', true);
+		var search = $('input#geo_base_search');
+		if($(event.target).closest("#geo_base_info").length) return;
+		$("#geo_base_info").animate({ height: 'hide' }, "fast");
+		if(search.val() == '' && !$('#geo_base_btn').prop('disabled'))
+				$('#geo_base_btn').prop('disabled', true);
 
-		if($(event.target).closest("#reaspekt_geobase_search").length) return;
+		if($(event.target).closest("#geo_base_search").length) return;
 		search.val('');
 		event.stopPropagation();
 	});
@@ -498,24 +494,24 @@ $(function(){
 	});
 });
 
-function reaspekt_geobase_add_city(){ // on click Select
-	$('#reaspekt_geobase_btn').prop('disabled', false);
-	$("#reaspekt_geobase_info").animate({ height: 'hide' }, "fast");
+function geo_base_add_city(){ // on click Select
+	$('#geo_base_btn').prop('disabled', false);
+	$("#geo_base_info").animate({ height: 'hide' }, "fast");
 }
 
-function reaspekt_geobase_load(){
-	reaspekt_geobase.timer = 0;
+function geo_base_load(){
+	geo_base.timer = 0;
 	$.ajax({
 		type: "POST",
-		url: '/bitrix/admin/reaspekt_geobase_selected.php',
+		url: '/bitrix/admin/geo_base_selected.php',
 		dataType: 'json',
-		data: { 'city_name': reaspekt_geobase.letters,
+		data: { 'city_name': geo_base.letters,
 			'lang': BX.message('LANGUAGE_ID'),
 			'sessid': BX.message('bitrix_sessid')
 		},
 		timeout: 10000,
 		success: function(data){
-			var list = $('select#reaspekt_geobase_info');
+			var list = $('select#geo_base_info');
 
 			list.html('');
 			if(data == '' || data == null)
@@ -525,37 +521,37 @@ function reaspekt_geobase_load(){
 				for(var i=0; i < data.length; i++){
 					var sOptVal = data[i]['CITY'] + (typeof(data[i]['REGION']) == "undefined" || data[i]['REGION'] == null ? '' : ', ' + data[i]['REGION'])
 					+ (typeof(data[i]['OKRUG']) == "undefined" || data[i]['OKRUG'] == ' ' || data[i]['OKRUG'] == null ? '' : ', ' + data[i]['OKRUG']);
-					arOut += '<option id="reaspekt_geobase_inp'+ (typeof(data[i]['ID']) == "undefined" ? data[i]['ID'] : data[i]['ID']) +'"'
+					arOut += '<option id="geo_base_inp'+ (typeof(data[i]['ID']) == "undefined" ? data[i]['ID'] : data[i]['ID']) +'"'
 					+'value = "'+ sOptVal +'">'+ sOptVal +'</option>\n';
 				}
 				list.html(arOut);
-				list.reaspekt_geobase_light(reaspekt_geobase.letters);
-				reaspekt_geobase_select_sizing();
+				list.geo_base_light(geo_base.letters);
+				geo_base_select_sizing();
 				list.animate({ height: 'show' }, "fast");
 			}
 		}
 	});
 }
 
-function reaspekt_geobase_selKey(e){ // called when a key is pressed in Select
+function geo_base_selKey(e){ // called when a key is pressed in Select
 	e=e||window.event;
 	t=(window.event) ? window.event.srcElement : e.currentTarget; // The object which caused
 
 	if(e.keyCode == 13){ // Enter
-		reaspekt_geobase_onclick('Enter');
-		$("#reaspekt_geobase_info").animate({ height: 'hide' }, "fast");
+		geo_base_onclick('Enter');
+		$("#geo_base_info").animate({ height: 'hide' }, "fast");
 		return;
 	}
 	if(e.keyCode == 38 && t.selectedIndex == 0){ // up arrow
-		$('.reaspekt_geobase_find input[name=reaspekt_geobase_search]').focus();
-		$("#reaspekt_geobase_info").animate({ height: 'hide' }, "fast");
+		$('.geo_base_find input[name=geo_base_search]').focus();
+		$("#geo_base_info").animate({ height: 'hide' }, "fast");
 	}
 }
 
-function reaspekt_geobase_inpKey(e){ // input search
+function geo_base_inpKey(e){ // input search
 	e = e||window.event;
 	t = (window.event) ? window.event.srcElement : e.currentTarget; // The object which caused
-	var list = $('select#reaspekt_geobase_info');
+	var list = $('select#geo_base_info');
 
 	if(e.keyCode==40){	// down arrow
 		if(list.html() != ''){
@@ -566,28 +562,28 @@ function reaspekt_geobase_inpKey(e){ // input search
 	}
 	var sFind = BX.util.trim(t.value);
 
-	if(reaspekt_geobase.letters == sFind)
+	if(geo_base.letters == sFind)
 		return; // prevent frequent requests to the server
-	reaspekt_geobase.letters = sFind;
-	if(reaspekt_geobase.timer){
-		clearTimeout(reaspekt_geobase.timer);
-		reaspekt_geobase.timer = 0;
+	geo_base.letters = sFind;
+	if(geo_base.timer){
+		clearTimeout(geo_base.timer);
+		geo_base.timer = 0;
 	}
-	if(reaspekt_geobase.letters.length < 2){
+	if(geo_base.letters.length < 2){
 		list.animate({ height: 'hide' }, "fast");
 		return;
 	}
-	reaspekt_geobase.timer = window.setTimeout('reaspekt_geobase_load()', 190); // Load through 70ms after the last keystroke
+	geo_base.timer = window.setTimeout('geo_base_load()', 190); // Load through 70ms after the last keystroke
 }
 
-jQuery.fn.reaspekt_geobase_light = function(pat){
-	function reaspekt_geobase_innerLight(node, pat){
+jQuery.fn.geo_base_light = function(pat){
+	function geo_base_innerLight(node, pat){
 		var skip = 0;
 		if (node.nodeType == 3){
 			var pos = node.data.toUpperCase().indexOf(pat);
 			if (pos >= 0){
 				var spannode = document.createElement('span');
-				spannode.className = 'reaspekt_geobase_light';
+				spannode.className = 'geo_base_light';
 				var middlebit = node.splitText(pos);
 				var endbit = middlebit.splitText(pat.length);
 				var middleclone = middlebit.cloneNode(true);
@@ -598,18 +594,18 @@ jQuery.fn.reaspekt_geobase_light = function(pat){
 		}
 		else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)){
 			for (var i = 0; i < node.childNodes.length; ++i){
-				i += reaspekt_geobase_innerLight(node.childNodes[i], pat);
+				i += geo_base_innerLight(node.childNodes[i], pat);
 			}
 		}
 		return skip;
 	}
 	return this.each(function(){
-		reaspekt_geobase_innerLight(this, pat.toUpperCase());
+		geo_base_innerLight(this, pat.toUpperCase());
 	});
 };
 
-jQuery.fn.reaspekt_geobase_removeLight = function(){
-	return this.find("span.reaspekt_geobase_light").each(function(){
+jQuery.fn.geo_base_removeLight = function(){
+	return this.find("span.geo_base_light").each(function(){
 		this.parentNode.firstChild.nodeName;
 		with(this.parentNode){
 			replaceChild(this.firstChild, this);
@@ -624,18 +620,18 @@ jQuery.fn.reaspekt_geobase_removeLight = function(){
 $incMod = CModule::IncludeModuleEx($module_id);
 if ($incMod == '0')
 {
-    CAdminMessage::ShowMessage(Array("MESSAGE" => Loc::getMessage("REASPEKT_GEOBASE_NF", Array("#MODULE#" => $module_id)), "HTML"=>true, "TYPE"=>"ERROR"));
+    CAdminMessage::ShowMessage(Array("MESSAGE" => Loc::getMessage("GEOBASE_NF", Array("#MODULE#" => $module_id)), "HTML"=>true, "TYPE"=>"ERROR"));
 }
 elseif ($incMod == '2')
 {
-    ?><span class="errortext"><?=Loc::getMessage("REASPEKT_GEOBASE_DEMO_MODE", Array("#MODULE#" => $module_id))?></span><br/><?
+    ?><span class="errortext"><?=Loc::getMessage("GEOBASE_DEMO_MODE", Array("#MODULE#" => $module_id))?></span><br/><?
 }
 elseif ($incMod == '3')
 {
-    CAdminMessage::ShowMessage(Array("MESSAGE" => Loc::getMessage("REASPEKT_GEOBASE_DEMO_EXPIRED", Array("#MODULE#" => $module_id)), "HTML"=>true, "TYPE"=>"ERROR"));
+    CAdminMessage::ShowMessage(Array("MESSAGE" => Loc::getMessage("GEOBASE_DEMO_EXPIRED", Array("#MODULE#" => $module_id)), "HTML"=>true, "TYPE"=>"ERROR"));
 }
 ?>
-<form method='POST' action='<?echo $APPLICATION->GetCurPage()?>?mid=<?=htmlspecialcharsbx($request['mid'])?>&amp;lang=<?=$request['lang']?>' name='reaspekt_geobase_settings'><?
+<form method='POST' action='<?echo $APPLICATION->GetCurPage()?>?mid=<?=htmlspecialcharsbx($request['mid'])?>&amp;lang=<?=$request['lang']?>' name='geo_base_settings'><?
 
     $tabControl->Begin();
 	$tabControl->BeginNextTab();
@@ -647,21 +643,21 @@ elseif ($incMod == '3')
         if ($reaspekt_set_local_sql == "local_db") {
     ?>
         <tr class="heading">
-            <td colspan="2"><?=Loc::getMessage("REASPEKT_INP_CITY_LIST")?></td>
+            <td colspan="2"><?=Loc::getMessage("INP_CITY_LIST")?></td>
         </tr>
         
         <tr>
             <td colspan="2">
                 <table class="internal" width="100%">
-                    <tbody id="reaspekt_geobase_cities_table">
-                    <tr class="heading" id="reaspekt_geobase_table_header">
-                        <td><?=Loc::getMessage("REASPEKT_GEOBASE_TABLE_DEFAULT_CITY_TD1")?></td>
-                        <td><?=Loc::getMessage("REASPEKT_GEOBASE_TABLE_DEFAULT_CITY_TD2")?></td>
-                        <td><?=Loc::getMessage("REASPEKT_GEOBASE_TABLE_DEFAULT_CITY_TD3")?></td>
-                        <td><?=Loc::getMessage("REASPEKT_GEOBASE_TABLE_DEFAULT_CITY_TD4")?></td>
-                        <td><?=Loc::getMessage("REASPEKT_GEOBASE_TABLE_DEFAULT_CITY_TD5")?></td>
-                        <td><?=Loc::getMessage("REASPEKT_GEOBASE_TABLE_DEFAULT_CITY_TD6")?></td>
-                        <td><?=Loc::getMessage("REASPEKT_GEOBASE_TABLE_DEFAULT_CITY_TD7")?></td>
+                    <tbody id="geo_base_cities_table">
+                    <tr class="heading" id="geo_base_table_header">
+                        <td><?=Loc::getMessage("GEOBASE_TABLE_DEFAULT_CITY_TD1")?></td>
+                        <td><?=Loc::getMessage("GEOBASE_TABLE_DEFAULT_CITY_TD2")?></td>
+                        <td><?=Loc::getMessage("GEOBASE_TABLE_DEFAULT_CITY_TD3")?></td>
+                        <td><?=Loc::getMessage("GEOBASE_TABLE_DEFAULT_CITY_TD4")?></td>
+                        <td><?=Loc::getMessage("GEOBASE_TABLE_DEFAULT_CITY_TD5")?></td>
+                        <td><?=Loc::getMessage("GEOBASE_TABLE_DEFAULT_CITY_TD6")?></td>
+                        <td><?=Loc::getMessage("GEOBASE_TABLE_DEFAULT_CITY_TD7")?></td>
                     </tr>
                     <?
                     if($incMod != '0' && $incMod != '3') {
@@ -673,32 +669,32 @@ elseif ($incMod == '3')
             </td>
         </tr>
         <tr class="heading">
-            <td colspan="2"><?=Loc::getMessage("REASPEKT_INP_CITY_ADD")?></td>
+            <td colspan="2"><?=Loc::getMessage("INP_CITY_ADD")?></td>
         </tr>
         <tr>
             <td>
                 <input type="hidden" value="<?=$reaspekt_city_manual_default?>" name="reaspekt_city_manual_default" />
-                <input type="text" size="100" maxlength="255" id="reaspekt_geobase_search" onkeyup="reaspekt_geobase_inpKey(event);" autocomplete="off" placeholder="<?=Loc::getMessage("REASPEKT_INP_ENTER_CITY");?>" name="reaspekt_geobase_search" value="">
+                <input type="text" size="100" maxlength="255" id="geo_base_search" onkeyup="geo_base_inpKey(event);" autocomplete="off" placeholder="<?=Loc::getMessage("INP_ENTER_CITY");?>" name="geo_base_search" value="">
                 <br/>
-                <select id="reaspekt_geobase_info" ondblclick="reaspekt_geobase_onclick();" onkeyup="reaspekt_geobase_selKey(event);" onchange="reaspekt_geobase_select_change(event);" onclick="reaspekt_geobase_add_city();" size="2" style="display: none;">
+                <select id="geo_base_info" ondblclick="geo_base_onclick();" onkeyup="geo_base_selKey(event);" onchange="geo_base_select_change(event);" onclick="geo_base_add_city();" size="2" style="display: none;">
                 </select>
             </td>
         </tr>
         <tr>
-            <td><input type="submit" id="reaspekt_geobase_btn" value="<?=Loc::getMessage("REASPEKT_TABLE_CITY_ADD");?>" onclick="reaspekt_geobase_onclick(); return false;" disabled="true">
+            <td><input type="submit" id="geo_base_btn" value="<?=Loc::getMessage("TABLE_CITY_ADD");?>" onclick="geo_base_onclick(); return false;" disabled="true">
             </td>
         </tr>
     
     <?
         } else {
-            echo Loc::getMessage("REASPEKT_GEOBASE_DISABLED_NO_LOCAL_DB");
+            echo Loc::getMessage("GEOBASE_DISABLED_NO_LOCAL_DB");
         }
     $tabControl->BeginNextTab();
         if ($reaspekt_set_local_sql == "local_db") {
     ?>
     
 	<tr class="heading">
-		<td colspan="2"><?=Loc::getMessage("REASPEKT_GEOBASE_DB_UPDATE_IPGEOBASE")?></td>
+		<td colspan="2"><?=Loc::getMessage("GEOBASE_DB_UPDATE_IPGEOBASE")?></td>
 	</tr>
 
 	<tr>
@@ -707,18 +703,18 @@ elseif ($incMod == '3')
 				<div id="reaspektOptionNotices" class="adm-info-message" style="display: block">
 					
                     <div style="display: none;" id="reaspektOptionUpdateUI">
-                        <?=Loc::getMessage("REASPEKT_NOTICE_UPDATE_AVAILABLE")?>
+                        <?=Loc::getMessage("NOTICE_UPDATE_AVAILABLE")?>
                         <br><br>
-                        <input id="dbupdater" type="button" value="<?=Loc::getMessage("REASPEKT_GEOBASE_UPDATE");?>" onclick="updateDB()">
+                        <input id="dbupdater" type="button" value="<?=Loc::getMessage("GEOBASE_UPDATE");?>" onclick="updateDB()">
                     </div>
                     <div id="reaspektOptionManualUpdate">
-                        <?=Loc::getMessage("REASPEKT_NOTICE_UPDATE_MANUAL_MODE")?>
+                        <?=Loc::getMessage("NOTICE_UPDATE_MANUAL_MODE")?>
                         <br><br>
-                        <input type="button" onclick="BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', {'action':'UPDATE'}, obHandler); return false;" value="<?=Loc::getMessage("REASPEKT_GEOBASE_CHECK_UPDATE");?>">
+                        <input type="button" onclick="BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', {'action':'UPDATE'}, obHandler); return false;" value="<?=Loc::getMessage("GEOBASE_CHECK_UPDATE");?>">
                     </div>
 				</div>
 				<div class="reaspekt_option-main-box" id="reaspektOptionLoaderUI">
-					<h3 id="title"><?=Loc::getMessage("REASPEKT_TITLE_LOAD_FILE")?></h3>
+					<h3 id="title"><?=Loc::getMessage("TITLE_LOAD_FILE")?></h3>
 					<span class="reaspekt_option-progress-bar">
 						<span>
 							<span id="progress"></span>
@@ -732,7 +728,7 @@ elseif ($incMod == '3')
 	<?ShowParamsHTMLByArray($arAllOptions["edit3"]);
     
         } else {
-            echo Loc::getMessage("REASPEKT_GEOBASE_DISABLED_NO_LOCAL_DB");
+            echo Loc::getMessage("GEOBASE_DISABLED_NO_LOCAL_DB");
         }
     $tabControl->BeginNextTab();
         require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/admin/group_rights.php");

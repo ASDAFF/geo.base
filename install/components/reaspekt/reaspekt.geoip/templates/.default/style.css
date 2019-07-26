@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
+ */
+
 .wrapGeoIpReaspekt{
 	font-family: Arial;
 }
@@ -73,7 +77,7 @@
 }
 
 #reaspekt_preloader {
-    background: rgba(0, 0, 0, 0.3) url(/local/css/reaspekt/reaspekt.geobase/images/preloader.png) no-repeat center center;
+    background: rgba(0, 0, 0, 0.3) url(/local/css/reaspekt/geo.base/images/preloader.png) no-repeat center center;
     bottom: 0;
     left: 0;
     position: absolute;
@@ -162,7 +166,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#dbdbdb',GradientType=0 ); /* IE6-9 */
     font-family: Arial;
 }
-.reaspekt_geobase_title {
+.geo_base_title {
     color: #363636;
     font-family: Arial;
     font-size: 16px;
@@ -205,27 +209,27 @@
 .reaspekt_col-sm-12 {
     width: 100%;
 }
-.reaspekt_geobase_cities .reaspekt_geobase_act{
+.geo_base_cities .geo_base_act{
 	margin-bottom: 15px;
 	line-height: 100%;
 }
-.reaspekt_geobase_cities .reaspekt_geobase_act a,
-.reaspekt_geobase_cities .reaspekt_geobase_act strong{
+.geo_base_cities .geo_base_act a,
+.geo_base_cities .geo_base_act strong{
 	font-size: 14px;
     line-height: 100%;
 	color: #363636;
     white-space: nowrap;
 }
-.reaspekt_geobase_cities .reaspekt_geobase_act a:after {
+.geo_base_cities .geo_base_act a:after {
     background: #407da6 none repeat scroll 0 0;
 }
-.reaspekt_geobase_find {
+.geo_base_find {
     margin: 0 0 25px 0;
     position: relative;
 }
 
 #reaspekt_preloader {
-    background: rgba(0, 0, 0, 0.3) url(/local/css/reaspekt/reaspekt.geobase/images/preloader.png) no-repeat center center;
+    background: rgba(0, 0, 0, 0.3) url(/local/css/reaspekt/geo.base/images/preloader.png) no-repeat center center;
     bottom: 0;
     left: 0;
     position: absolute;

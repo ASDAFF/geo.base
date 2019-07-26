@@ -1,10 +1,6 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@reaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
 
 use \Bitrix\Main\Localization\Loc;
@@ -17,7 +13,7 @@ Loc::loadMessages(__FILE__);
 <form action="<?echo $APPLICATION->GetCurPage()?>">
 	<?=bitrix_sessid_post()?>
 	<input type="hidden" name="lang" value="<?echo LANG?>">
-	<input type="hidden" name="id" value="reaspekt.geobase">
+	<input type="hidden" name="id" value="geo.base">
 	<input type="hidden" name="uninstall" value="Y">
 	<input type="hidden" name="step" value="2">
 	<?echo CAdminMessage::ShowMessage(Loc::getMessage("MOD_UNINST_WARN"))?>

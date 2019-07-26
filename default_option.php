@@ -1,5 +1,9 @@
 <?
-$reaspekt_geobase_default_option = array(
+/**
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
+ */
+
+$geo_base_default_option = array(
 	"reaspekt_set_local_sql" => "not_using",
 	"reaspekt_set_timeout" => "3",
 	"reaspekt_get_update" => "N",
@@ -24,12 +28,12 @@ $arDefaultCity = array(
 );
 
 
-if(CModule::IncludeModule("reaspekt.geobase")) {
+if(CModule::IncludeModule("geo.base")) {
     $statusDB = ReaspGeoIP::StatusTabelDB();
     
     if ($statusDB) {
-        $reaspekt_geobase_default_option["reaspekt_set_local_sql"] = "local_db";
-        $reaspekt_geobase_default_option["reaspekt_get_update"] = "Y";
+        $geo_base_default_option["reaspekt_set_local_sql"] = "local_db";
+        $geo_base_default_option["reaspekt_get_update"] = "Y";
         
         $arCityData = ReaspGeoIP::SelectCityXmlIdArray($arDefaultCity);
         
@@ -41,7 +45,7 @@ if(CModule::IncludeModule("reaspekt.geobase")) {
         if (!empty($arCity)) {
             $serializeCity = serialize($arCity);
             
-            $reaspekt_geobase_default_option["reaspekt_city_manual_default"] = $serializeCity;
+            $geo_base_default_option["reaspekt_city_manual_default"] = $serializeCity;
         }
     }
 }

@@ -24,7 +24,7 @@ $strCityName = htmlspecialchars(trim($request->getPost("city_name")));
 if(strlen($strCityName) >= 2):
     $arCity = ReaspGeoIP::SelectQueryCity($strCityName);
     
-    //ïðåäåëèëñ¤ ãîðîä ïî óìîë÷àíèþ
+    //ÑœÐ¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ð»ÑÂ¤ Ð³Ð¾Ñ€Ð¾Ð´ Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ
     $arData = ReaspGeoIP::GetAddr();
 ?>
 

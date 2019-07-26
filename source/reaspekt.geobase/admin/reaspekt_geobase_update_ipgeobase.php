@@ -146,9 +146,9 @@ if ($strAction == "UPDATE"){
 	if ($iTimeOut > 0)
 		$start_time = reaspekt_geobase_getmicrotime ();
 	
-	//Удаление HL
+	//РЈРґР°Р»РµРЅРёРµ HL
 	if ($_REQUEST["drop_t"] == 'Y') {
-        //TODO: ПОЛУЧАТЬ ID HL по названию таблицы.
+        //TODO: РџРћР›РЈР§РђРўР¬ ID HL РїРѕ РЅР°Р·РІР°РЅРёСЋ С‚Р°Р±Р»РёС†С‹.
 		
 		$requestHL = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('order' => array('NAME'), 'filter' => array("TABLE_NAME" => array("reaspekt_geobase_cities","reaspekt_geobase_codeip"))));
 		
@@ -159,9 +159,9 @@ if ($strAction == "UPDATE"){
 		}
 	}
     
-    //Очистка HL для обновления
+    //РћС‡РёСЃС‚РєР° HL РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ
 	if ($_REQUEST["drop_t"] == 'C') {
-        //TODO: ПОЛУЧАТЬ ID HL по названию таблицы.
+        //TODO: РџРћР›РЈР§РђРўР¬ ID HL РїРѕ РЅР°Р·РІР°РЅРёСЋ С‚Р°Р±Р»РёС†С‹.
 		
         $arTable = array("reaspekt_geobase_cities","reaspekt_geobase_codeip");
         
@@ -182,13 +182,13 @@ if ($strAction == "UPDATE"){
 				'TABLE_NAME' => 'reaspekt_geobase_codeip'
 			);
 			
-			//Создаем HL
+			//РЎРѕР·РґР°РµРј HL
 			$obResult = HL\HighloadBlockTable::add($highloadBlockData);
 			
-			//Успешное создание
+			//РЈСЃРїРµС€РЅРѕРµ СЃРѕР·РґР°РЅРёРµ
 			if ($obResult->isSuccess()) {
 				
-				//Формируем массив полей для записи в HL
+				//Р¤РѕСЂРјРёСЂСѓРµРј РјР°СЃСЃРёРІ РїРѕР»РµР№ РґР»СЏ Р·Р°РїРёСЃРё РІ HL
 				$arFieldsCodeIp = array(
 					"ACTIVE" => "boolean",
 					"BLOCK_BEGIN" => "string",
@@ -202,7 +202,7 @@ if ($strAction == "UPDATE"){
 				
 				foreach ($arFieldsCodeIp as $nameField => $typeField) {
 					$userTypeData = array(
-						'ENTITY_ID' => "HLBLOCK_".$obResult->getId(), /*это id highload блока*/
+						'ENTITY_ID' => "HLBLOCK_".$obResult->getId(), /*СЌС‚Рѕ id highload Р±Р»РѕРєР°*/
 						'FIELD_NAME' => "UF_".$nameField,
 						'USER_TYPE_ID' => $typeField,
 						'MANDATORY' => 'N',
@@ -227,7 +227,7 @@ if ($strAction == "UPDATE"){
 						$userTypeData["SETTINGS"]["DISPLAY"] = "CHECKBOX";
 					}
 					
-					//Добавляем поля в HL
+					//Р”РѕР±Р°РІР»СЏРµРј РїРѕР»СЏ РІ HL
 					$userTypeId = $userTypeEntity->Add( $userTypeData );
 					
 				}
@@ -305,13 +305,13 @@ if ($strAction == "UPDATE"){
 					'TABLE_NAME' => 'reaspekt_geobase_cities'
 				);
 				
-				//Создаем HL
+				//РЎРѕР·РґР°РµРј HL
 				$obResult = HL\HighloadBlockTable::add($highloadBlockData);
 				
-				//Успешное создание
+				//РЈСЃРїРµС€РЅРѕРµ СЃРѕР·РґР°РЅРёРµ
 				if ($obResult->isSuccess()) {
 					
-					//Формируем массив полей для записи в HL
+					//Р¤РѕСЂРјРёСЂСѓРµРј РјР°СЃСЃРёРІ РїРѕР»РµР№ РґР»СЏ Р·Р°РїРёСЃРё РІ HL
 					$arFieldsCodeIp = array(
 						"XML_ID" => "integer",
 						"ACTIVE" => "boolean",
@@ -326,7 +326,7 @@ if ($strAction == "UPDATE"){
 					
 					foreach ($arFieldsCodeIp as $nameField => $typeField) {
 						$userTypeData = array(
-							'ENTITY_ID' => "HLBLOCK_".$obResult->getId(), /*это id highload блока*/
+							'ENTITY_ID' => "HLBLOCK_".$obResult->getId(), /*СЌС‚Рѕ id highload Р±Р»РѕРєР°*/
 							'FIELD_NAME' => "UF_".$nameField,
 							'USER_TYPE_ID' => $typeField,
 							'MANDATORY' => 'N',
@@ -358,7 +358,7 @@ if ($strAction == "UPDATE"){
 							$userTypeData["SETTINGS"]["MAX_VALUE"] = "0";
 						}
 						
-						//Добавляем поля в HL
+						//Р”РѕР±Р°РІР»СЏРµРј РїРѕР»СЏ РІ HL
 						$userTypeId = $userTypeEntity->Add( $userTypeData );
 						
 					}
@@ -669,10 +669,10 @@ function json_encode_cyr($str) {
 		'\u0448','\u0429','\u0449','\u042a','\u044a','\u042b','\u044b','\u042c','\u044c',
 		'\u042d','\u044d','\u042e','\u044e','\u042f','\u044f');
 
-	$arr_replace_cyr = array('false', 'А', 'а', 'Б', 'б', 'В', 'в', 'Г', 'г', 'Д', 'д', 'Е', 'е',
-		'Ё', 'ё', 'Ж','ж','З','з','И','и','Й','й','К','к','Л','л','М','м','Н','н','О','о',
-		'П','п','Р','р','С','с','Т','т','У','у','Ф','ф','Х','х','Ц','ц','Ч','ч','Ш','ш',
-		'Щ','щ','Ъ','ъ','Ы','ы','Ь','ь','Э','э','Ю','ю','Я','я');
+	$arr_replace_cyr = array('false', 'Рђ', 'Р°', 'Р‘', 'Р±', 'Р’', 'РІ', 'Р“', 'Рі', 'Р”', 'Рґ', 'Р•', 'Рµ',
+		'РЃ', 'С‘', 'Р–','Р¶','Р—','Р·','Р','Рё','Р™','Р№','Рљ','Рє','Р›','Р»','Рњ','Рј','Рќ','РЅ','Рћ','Рѕ',
+		'Рџ','Рї','Р ','СЂ','РЎ','СЃ','Рў','С‚','РЈ','Сѓ','Р¤','С„','РҐ','С…','Р¦','С†','Р§','С‡','РЁ','С€',
+		'Р©','С‰','РЄ','СЉ','Р«','С‹','Р¬','СЊ','Р­','СЌ','Р®','СЋ','РЇ','СЏ');
 
 	$str1 = json_encode($str, JSON_FORCE_OBJECT);
 	$str2 = str_replace($arr_replace_utf,$arr_replace_cyr,$str1);

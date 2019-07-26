@@ -1,10 +1,6 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@reaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
  
 use \Bitrix\Main\Localization\Loc;
@@ -29,7 +25,7 @@ if (!\Bitrix\Main\Loader::includeModule("highloadblock")) {
 <form action="<?=$APPLICATION->GetCurPage()?>">
 	<?=bitrix_sessid_post()?>
 	<input type="hidden" name="lang" value="<?=LANGUAGE_ID?>"/>
-	<input type="hidden" name="id" value="reaspekt.geobase"/>
+	<input type="hidden" name="id" value="geo.base"/>
 	<input type="hidden" name="install" value="Y"/>
 	<input type="hidden" name="step" value="2"/>
 	<?if(CheckUrlAvaible('http://ipgeobase.ru/files/db/Main/geo_files.tar.gz')){?>

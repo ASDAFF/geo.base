@@ -1,10 +1,6 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@reaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
  
 use \Bitrix\Main\Localization\Loc;
@@ -62,7 +58,7 @@ $request = \Bitrix\Main\HttpApplication::getInstance()->getContext()->getRequest
 
 <script language="JavaScript">
 var timer, obData, updateMode;
-reaspekt_geobase_obHandler = function (data) {
+geo_base_obHandler = function (data) {
 	console.log(data);
 	var progress, value, title, send;
 	updateMode = <?=($update_mode ? 'true' : 'false')?>;
@@ -77,7 +73,7 @@ reaspekt_geobase_obHandler = function (data) {
 		};
 		progress.style.width = obData.PROGRESS + '%';
 		value.innerHTML = obData.PROGRESS + '%';
-		BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, reaspekt_geobase_obHandler);
+		BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, geo_base_obHandler);
 	}
 	else if (obData.STATUS == 2) {
 		send = {
@@ -91,14 +87,14 @@ reaspekt_geobase_obHandler = function (data) {
 		value.innerHTML = obData.PROGRESS + '%';
 		if (obData.PROGRESS == 100) {
 			timer = setInterval(function () {
-				title.innerHTML = "<?=Loc::getMessage("REASPEKT_TITLE_UNPACK_FILE")?>";
+				title.innerHTML = "<?=Loc::getMessage("TITLE_UNPACK_FILE")?>";
 				progress.style.width = 0 + '%';
 				value.innerHTML = 0 + '%';
-				BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, reaspekt_geobase_obHandler);
+				BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, geo_base_obHandler);
 				clearInterval(timer);
 			}, 500);
 		} else {
-			BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, reaspekt_geobase_obHandler);
+			BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, geo_base_obHandler);
 		}
 	}
 	else if (obData.STATUS == 1) {
@@ -114,32 +110,32 @@ reaspekt_geobase_obHandler = function (data) {
 		value.innerHTML = obData.PROGRESS + '%';
 		if (obData.PROGRESS == 100) {
 			timer = setInterval(function () {
-				title.innerHTML = "<?=Loc::getMessage("REASPEKT_TITLE_DB_UPDATE")?>";
+				title.innerHTML = "<?=Loc::getMessage("TITLE_DB_UPDATE")?>";
 				progress.style.width = 0 + '%';
 				value.innerHTML = 0 + '%';
-				BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, reaspekt_geobase_obHandler);
+				BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, geo_base_obHandler);
 				clearInterval(timer);
 			}, 500);
 		} else {
-			BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', send, reaspekt_geobase_obHandler);
+			BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', send, geo_base_obHandler);
 		}
 	}
 	else if (obData.STATUS == 0) {
 		document.getElementById("form_setup").submit();
 	}
 };
-function reaspekt_geobase_updateDB() {
-	BX.ajax.post('/bitrix/admin/reaspekt_geobase_update_ipgeobase.php', {'action':'LOAD', "timeout":3}, reaspekt_geobase_obHandler);
+function geo_base_updateDB() {
+	BX.ajax.post('/bitrix/admin/geo_base_update_ipgeobase.php', {'action':'LOAD', "timeout":3}, geo_base_obHandler);
 }
 
 BX.ready(function(){
-	reaspekt_geobase_updateDB();
+	geo_base_updateDB();
 });
 </script>
 
 <div class="reasp-main" style="text-align: center">
 	<div class="reasp-gbase-main-box" id="alxLoaderUI">
-		<h3 id="title"><?=Loc::getMessage("REASPEKT_TITLE_LOAD_FILE")?></h3>
+		<h3 id="title"><?=Loc::getMessage("TITLE_LOAD_FILE")?></h3>
 		<span class="reasp-gbase-progress-bar">
 			<span>
 				<span id="progress"></span>
@@ -151,7 +147,7 @@ BX.ready(function(){
 	<form action="<?=$APPLICATION->GetCurPage()?>" id="form_setup">
 		<?=bitrix_sessid_post()?>
 		<input type="hidden" name="lang" value="<?=LANGUAGE_ID?>"/>
-		<input type="hidden" name="id" value="reaspekt.geobase"/>
+		<input type="hidden" name="id" value="geo.base"/>
 		<input type="hidden" name="install" value="N"/>
 		<input type="hidden" name="step" value="3"/>
 	<?if ($request['LOAD_DATA'] == 'Y' || $request['LOAD_DATA'] == "N") :?>

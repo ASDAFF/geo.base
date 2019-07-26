@@ -1,14 +1,18 @@
 <?
+/**
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
+ */
+
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Bitrix\Main\Config\Option;
 
-$module_id = "reaspekt.geobase";
+$module_id = "geo.base";
 
 $incMod = CModule::IncludeModuleEx($module_id);
 
 if ($incMod == '0' || $incMod == '3') {
-	ShowError(GetMessage("REASPEKT_GEOIP_MODULE_NOT_INSTALLED"));
+	ShowError(GetMessage("GEOIP_MODULE_NOT_INSTALLED"));
 	return;
 }
 

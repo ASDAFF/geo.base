@@ -1,4 +1,8 @@
 <?
+/**
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
+ */
+
 define('NO_KEEP_STATISTIC', true);
 define('NO_AGENT_STATISTIC', true);
 define('NO_AGENT_CHECK', true);
@@ -7,7 +11,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.ph
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Application;
 
-$module_id = "reaspekt.geobase";
+$module_id = "geo.base";
 
 if (!CModule::IncludeModule($module_id)) {
     ShowError("Error! Module no install");

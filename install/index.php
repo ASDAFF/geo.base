@@ -1,10 +1,6 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@rreaspekt_geobase_citieseaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
 use \Bitrix\Main\Localization\Loc;
 use \Bitrix\Main\Config as Conf;
@@ -18,7 +14,7 @@ use Bitrix\Highloadblock as HL;
 
 Loc::loadMessages(__FILE__);
 
-Class reaspekt_geobase extends CModule {
+Class geo_base extends CModule {
 	
 	var $nameCompany = "reaspekt";
 	var $pathResourcesCompany = "local";
@@ -26,7 +22,7 @@ Class reaspekt_geobase extends CModule {
     
     var $exclusionAdminFiles;
     
-	var $MODULE_ID = "reaspekt.geobase";
+	var $MODULE_ID = "geo.base";
 	var $MODULE_VERSION;
 	var $MODULE_VERSION_DATE;
 	var $MODULE_NAME;
@@ -38,20 +34,20 @@ Class reaspekt_geobase extends CModule {
 		
 		include(__DIR__."/version.php");
         
-        //Èñêëþ÷åíèÿ
+        //Ð˜ÑÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ñ
         $this->exclusionAdminFiles=array(
             '..',
             '.',
         );
 
-        $this->MODULE_ID = "reaspekt.geobase";
+        $this->MODULE_ID = "geo.base";
 		$this->MODULE_VERSION = $arModuleVersion["VERSION"];
 		$this->MODULE_VERSION_DATE = $arModuleVersion["VERSION_DATE"];
-		$this->MODULE_NAME = Loc::getMessage("REASPEKT_GEOBASE_MODULE_NAME");
-		$this->MODULE_DESCRIPTION = Loc::getMessage("REASPEKT_GEOBASE_MODULE_DESC");
+		$this->MODULE_NAME = Loc::getMessage("GEOBASE_MODULE_NAME");
+		$this->MODULE_DESCRIPTION = Loc::getMessage("GEOBASE_MODULE_DESC");
 
-		$this->PARTNER_NAME = Loc::getMessage("REASPEKT_GEOBASE_PARTNER_NAME");
-		$this->PARTNER_URI = Loc::getMessage("REASPEKT_GEOBASE_PARTNER_URI");
+		$this->PARTNER_NAME = Loc::getMessage("GEOBASE_PARTNER_NAME");
+		$this->PARTNER_URI = Loc::getMessage("GEOBASE_PARTNER_URI");
 
         $this->MODULE_SORT = 1;
         $this->SHOW_SUPER_ADMIN_GROUP_RIGHTS='N';
@@ -63,7 +59,7 @@ Class reaspekt_geobase extends CModule {
 		}
 	}
 	
-	//Îïðåäåëÿåì ìåñòî ðàçìåùåíèÿ ìîäóëÿ
+	//ÐžÐ¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÐ¼ Ð¼ÐµÑÑ‚Ð¾ Ñ€Ð°Ð·Ð¼ÐµÑ‰ÐµÐ½Ð¸Ñ Ð¼Ð¾Ð´ÑƒÐ»Ñ
     public function GetPath($notDocumentRoot=false)
     {
         if($notDocumentRoot)
@@ -72,7 +68,7 @@ Class reaspekt_geobase extends CModule {
             return dirname(__DIR__);
     }
 	
-	//Ïðîâåðÿåì ÷òî ñèñòåìà ïîääåðæèâàåò D7
+	//ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ñ‡Ñ‚Ð¾ ÑÐ¸ÑÑ‚ÐµÐ¼Ð° Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÐµÑ‚ D7
     public function isVersionD7() {
         return CheckVersion(\Bitrix\Main\ModuleManager::getVersion('main'), '14.00.00');
     }
@@ -91,7 +87,7 @@ Class reaspekt_geobase extends CModule {
 			
 			if ($step == 2) {
 				
-				//Óñòàíàâëèâàåì ôàéëû
+				//Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ñ„Ð°Ð¹Ð»Ñ‹
 				$this->InstallFiles();
 				
 				if ($request["LOAD_DATA"] != "Y"){
@@ -104,7 +100,7 @@ Class reaspekt_geobase extends CModule {
 				$GLOBALS["install_step"] = 1;
 				
 				$APPLICATION->IncludeAdminFile(
-					Loc::getMessage("REASPEKT_GEOBASE_INSTALL_TITLE"),
+					Loc::getMessage("GEOBASE_INSTALL_TITLE"),
 					$this->GetPath() . "/install/step1.php"
 				);
 				
@@ -112,7 +108,7 @@ Class reaspekt_geobase extends CModule {
 				$GLOBALS["install_step"]	= 2;
 				
 				$APPLICATION->IncludeAdminFile(
-					Loc::getMessage("REASPEKT_GEOBASE_INSTALL_TITLE"),
+					Loc::getMessage("GEOBASE_INSTALL_TITLE"),
 					$this->GetPath() . "/install/step2.php"
 				);
 				
@@ -122,17 +118,17 @@ Class reaspekt_geobase extends CModule {
 					$GLOBALS["install_step"] = 3;
 					
 					$APPLICATION->IncludeAdminFile(
-						Loc::getMessage("REASPEKT_GEOBASE_INSTALL_TITLE"),
+						Loc::getMessage("GEOBASE_INSTALL_TITLE"),
 						$this->GetPath() . "/install/step3.php"
 					);
 				}
 			}
 			
 		} else {
-            $APPLICATION->ThrowException(Loc::getMessage("REASPEKT_GEOBASE_INSTALL_ERROR_VERSION"));
+            $APPLICATION->ThrowException(Loc::getMessage("GEOBASE_INSTALL_ERROR_VERSION"));
 			
 			$APPLICATION->IncludeAdminFile(
-				Loc::getMessage("REASPEKT_GEOBASE_INSTALL_TITLE"),
+				Loc::getMessage("GEOBASE_INSTALL_TITLE"),
 				$this->GetPath() . "/install/step.php"
 			);
         }
@@ -146,7 +142,7 @@ Class reaspekt_geobase extends CModule {
 		
 		if ($request["step"] < 2) {
 			$APPLICATION->IncludeAdminFile(
-				Loc::getMessage("REASPEKT_GEOBASE_UNINSTALL_TITLE"), 
+				Loc::getMessage("GEOBASE_UNINSTALL_TITLE"), 
 				$this->GetPath() . "/install/unstep1.php"
 			);
 		} elseif ($request["step"] == 2) {
@@ -171,7 +167,7 @@ Class reaspekt_geobase extends CModule {
 			\Bitrix\Main\ModuleManager::unRegisterModule($this->MODULE_ID);
 			
 			$APPLICATION->IncludeAdminFile(
-				Loc::getMessage("REASPEKT_GEOBASE_UNINSTALL_TITLE"), 
+				Loc::getMessage("GEOBASE_UNINSTALL_TITLE"), 
 				$this->GetPath() . "/install/unstep2.php"
 			);
 		}
@@ -189,7 +185,7 @@ Class reaspekt_geobase extends CModule {
 			$APPLICATION->ThrowException(implode("", $this->errors));
 			return false;
 		}
-		//Ðåãèñòðàöèÿ ìîäóëÿ â ñèñòåìå
+		//Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ Ð¼Ð¾Ð´ÑƒÐ»Ñ Ð² ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ
 		\Bitrix\Main\ModuleManager::registerModule($this->MODULE_ID);
         
         EventManager::getInstance()->registerEventHandler(
@@ -211,7 +207,7 @@ Class reaspekt_geobase extends CModule {
 		global $DB, $DBType, $APPLICATION;
 		
 		if (!$arParams['savedata']){
-			$requestHL = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('order' => array('NAME'), 'filter' => array("TABLE_NAME" => array("reaspekt_geobase_cities","reaspekt_geobase_codeip"))));
+			$requestHL = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('order' => array('NAME'), 'filter' => array("TABLE_NAME" => array("geo_base_cities","geo_base_codeip"))));
 			
 			while ($rowHL = $requestHL->fetch()){
 				if ($DB->TableExists($rowHL["TABLE_NAME"])) {
@@ -224,7 +220,7 @@ Class reaspekt_geobase extends CModule {
 	}
 	
 	function InstallFiles() {
-		//Ñîçäàåì ïàïêó 'geobase' â /upload/ òóäà áóäåì çàãðóæàòü ôàéëû ñ äàííûìè îá IP àäðåñàõ è ãîðîäàõ
+		//Ð¡Ð¾Ð·Ð´Ð°ÐµÐ¼ Ð¿Ð°Ð¿ÐºÑƒ 'geobase' Ð² /upload/ Ñ‚ÑƒÐ´Ð° Ð±ÑƒÐ´ÐµÐ¼ Ð·Ð°Ð³Ñ€ÑƒÐ¶Ð°Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»Ñ‹ Ñ Ð´Ð°Ð½Ð½Ñ‹Ð¼Ð¸ Ð¾Ð± IP Ð°Ð´Ñ€ÐµÑÐ°Ñ… Ð¸ Ð³Ð¾Ñ€Ð¾Ð´Ð°Ñ…
 		if (!\Bitrix\Main\IO\Directory::isDirectoryExists($_SERVER["DOCUMENT_ROOT"] . "/upload/".$this->nameCompany . "/geobase/")) {
 			if(!defined("BX_DIR_PERMISSIONS"))
 				mkdir($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $this->nameCompany . "/geobase/", 0755, true);
@@ -232,28 +228,28 @@ Class reaspekt_geobase extends CModule {
 				mkdir($_SERVER["DOCUMENT_ROOT"] . "/upload/" . $this->nameCompany . "/geobase/", BX_DIR_PERMISSIONS, true);
 		}
         
-        //Ïóòü äî ïàïêè /install/css â ìîäóëå
+        //ÐŸÑƒÑ‚ÑŒ Ð´Ð¾ Ð¿Ð°Ð¿ÐºÐ¸ /install/css Ð² Ð¼Ð¾Ð´ÑƒÐ»Ðµ
 		$pathComponents = $this->GetPath() . "/install/css";
 		
-		//Ïðîâåðÿåì ñóùåòâóåò ëè ïàïêà
+		//ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ ÑÑƒÑ‰ÐµÑ‚Ð²ÑƒÐµÑ‚ Ð»Ð¸ Ð¿Ð°Ð¿ÐºÐ°
 		if(\Bitrix\Main\IO\Directory::isDirectoryExists($pathComponents))
 			CopyDirFiles($pathComponents, $_SERVER["DOCUMENT_ROOT"] . "/".$this->pathResourcesCompany . "/css", true, true);
         else
             throw new \Bitrix\Main\IO\InvalidPathException($pathComponents);
 		
-        //Ïóòü äî ïàïêè /install/js â ìîäóëå
+        //ÐŸÑƒÑ‚ÑŒ Ð´Ð¾ Ð¿Ð°Ð¿ÐºÐ¸ /install/js Ð² Ð¼Ð¾Ð´ÑƒÐ»Ðµ
 		$pathComponents = $this->GetPath() . "/install/js";
 		
-		//Ïðîâåðÿåì ñóùåòâóåò ëè ïàïêà
+		//ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ ÑÑƒÑ‰ÐµÑ‚Ð²ÑƒÐµÑ‚ Ð»Ð¸ Ð¿Ð°Ð¿ÐºÐ°
 		if(\Bitrix\Main\IO\Directory::isDirectoryExists($pathComponents))
 			CopyDirFiles($pathComponents, $_SERVER["DOCUMENT_ROOT"] . "/" .$this->pathResourcesCompany . "/js", true, true);
         else
             throw new \Bitrix\Main\IO\InvalidPathException($pathComponents);
 		
-		//Ïóòü äî ïàïêè /install/components â ìîäóëå
+		//ÐŸÑƒÑ‚ÑŒ Ð´Ð¾ Ð¿Ð°Ð¿ÐºÐ¸ /install/components Ð² Ð¼Ð¾Ð´ÑƒÐ»Ðµ
 		$pathComponents = $this->GetPath() . "/install/components";
 		
-		//Ïðîâåðÿåì ñóùåòâóåò ëè ïàïêà
+		//ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ ÑÑƒÑ‰ÐµÑ‚Ð²ÑƒÐµÑ‚ Ð»Ð¸ Ð¿Ð°Ð¿ÐºÐ°
 		if(\Bitrix\Main\IO\Directory::isDirectoryExists($pathComponents))
 			CopyDirFiles($pathComponents, $_SERVER["DOCUMENT_ROOT"] . "/" . $this->pathResourcesCompany . "/components", true, true);
         else
@@ -261,10 +257,10 @@ Class reaspekt_geobase extends CModule {
 		
 		$path = $this->GetPath().'/admin';
 		
-		//Ïðîâåðÿåì ñóùåòâóåò ëè ïàïêà
+		//ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ ÑÑƒÑ‰ÐµÑ‚Ð²ÑƒÐµÑ‚ Ð»Ð¸ Ð¿Ð°Ð¿ÐºÐ°
 		if (\Bitrix\Main\IO\Directory::isDirectoryExists($path)) {
 			
-            //åñëè åñòü ôàéëû äëÿ êîïèðîâàíèÿ
+            //ÐµÑÐ»Ð¸ ÐµÑÑ‚ÑŒ Ñ„Ð°Ð¹Ð»Ñ‹ Ð´Ð»Ñ ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ
             CopyDirFiles($this->GetPath() . "/install/admin/", $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin"); 
 			
             if ($dir = opendir($path)) {
@@ -284,8 +280,8 @@ Class reaspekt_geobase extends CModule {
 	
 	function UnInstallFiles(){
 		
-		\Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/' . $this->pathResourcesCompany . '/css/' . $this->nameCompany . '/reaspekt.geobase/');
-		\Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/' . $this->pathResourcesCompany . '/js/' . $this->nameCompany . '/reaspekt.geobase/');
+		\Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/' . $this->pathResourcesCompany . '/css/' . $this->nameCompany . '/geo.base/');
+		\Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/' . $this->pathResourcesCompany . '/js/' . $this->nameCompany . '/geo.base/');
 		\Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/' . $this->pathResourcesCompany . '/components/' . $this->nameCompany . '/reaspekt.geoip/');
         \Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/upload/' . $this->nameCompany . '/geobase/');
 

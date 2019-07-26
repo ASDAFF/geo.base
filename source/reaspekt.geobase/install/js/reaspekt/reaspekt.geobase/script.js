@@ -12,7 +12,7 @@
         fixedPosition : false
     };
     var params = {
-        htmlPopup : '<div class="ReaspektPopupOverlay"></div><div id="ReaspektPopupBody"><div class="ReaspektClosePosition"><div id="ReaspektCloseBtn"></div></div><div id="ReaspektPopupContainer">Загрузка...</div></div>',
+        htmlPopup : '<div class="ReaspektPopupOverlay"></div><div id="ReaspektPopupBody"><div class="ReaspektClosePosition"><div id="ReaspektCloseBtn"></div></div><div id="ReaspektPopupContainer">Р—Р°РіСЂСѓР·РєР°...</div></div>',
         objPopupIdBody : '#ReaspektPopupBody',
         objPopupIdOverlay : '.ReaspektPopupOverlay',
         objPopupIdCloseBtn : '#ReaspektCloseBtn',
@@ -39,7 +39,7 @@
             });
         },
         
-        //Добавляем Div`s
+        //Р”РѕР±Р°РІР»СЏРµРј Div`s
         addHtmlTemplate : function(settings) {
             methods.closeReaspektPopup();
 			$('body').append(params.htmlPopup);
@@ -111,13 +111,13 @@
 
     $.fn.ReaspektModalBox = function( method ) {
 
-        // логика вызова метода
+        // Р»РѕРіРёРєР° РІС‹Р·РѕРІР° РјРµС‚РѕРґР°
         if ( methods[method] ) {
           return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof method === 'object' || ! method ) {
           return methods.init.apply( this, arguments );
         } else {
-          $.error( 'Метод с именем ' +  method + ' не существует для jQuery.ReaspektModalBox' );
+          $.error( 'РњРµС‚РѕРґ СЃ РёРјРµРЅРµРј ' +  method + ' РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РґР»СЏ jQuery.ReaspektModalBox' );
         } 
     };
     

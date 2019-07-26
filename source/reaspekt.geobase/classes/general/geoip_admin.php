@@ -114,11 +114,11 @@ class ReaspAdminGeoIP {
         $arCity = ReaspGeoIP::SelectCityId($city_id);
         
         if ($arCity["ID"]) {
-            //Смотрим настройки модуля
+            //РЎРјРѕС‚СЂРёРј РЅР°СЃС‚СЂРѕР№РєРё РјРѕРґСѓР»СЏ
             $reaspekt_city_manual_default = Option::get(self::MID, "reaspekt_city_manual_default");
             $ar_reaspekt_city_manual_default = unserialize($reaspekt_city_manual_default);
             $ar_reaspekt_city_manual_default[] = $arCity["ID"];
-            //Убираем дубли
+            //РЈР±РёСЂР°РµРј РґСѓР±Р»Рё
             $ar_reaspekt_city_manual_default = array_unique($ar_reaspekt_city_manual_default);
             $reaspekt_city_manual_default = serialize($ar_reaspekt_city_manual_default);
             Option::set(self::MID, "reaspekt_city_manual_default", $reaspekt_city_manual_default);

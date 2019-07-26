@@ -1,6 +1,10 @@
 <?require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
+/**
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
+ */
+
 \Bitrix\Main\Loader::includeModule("main");
-\Bitrix\Main\Loader::includeModule("reaspekt.geobase");
+\Bitrix\Main\Loader::includeModule("geo.base");
 \Bitrix\Main\Loader::includeModule("highloadblock");
 use Bitrix\Highloadblock as HL;
 use Bitrix\Main\Config\Option;
@@ -54,9 +58,9 @@ if ($strAction == "UPDATE"){
 	if (ReaspGeoIP::GetIsUpdateDataFile(LOAD_HOST, LOAD_PATH, LOAD_FILE, $strFilename)){
 		$ID = CAdminNotify::Add(
 			array(
-				"MESSAGE"	    => Loc::getMessage("REASPEKT_GEOBASE_THERE_IS"),
+				"MESSAGE"	    => Loc::getMessage("GEOBASE_THERE_IS"),
 				"TAG"		    => "GEOBASE_DB_UPDATE_" . date('d.m.Y'),
-				"MODULE_ID"	    => "reaspekt.geobase",
+				"MODULE_ID"	    => "geo.base",
 				"ENABLE_CLOSE"  => "Y"
 			)
 		);
@@ -144,13 +148,13 @@ if ($strAction == "UPDATE"){
 } elseif ($strAction == "DBUPDATE") {
 	$iTimeOut = TIMEOUT;
 	if ($iTimeOut > 0)
-		$start_time = reaspekt_geobase_getmicrotime ();
+		$start_time = geo_base_getmicrotime ();
 	
-	//Удаление HL
+	//РЈРґР°Р»РµРЅРёРµ HL
 	if ($_REQUEST["drop_t"] == 'Y') {
-        //TODO: ПОЛУЧАТЬ ID HL по названию таблицы.
+        //TODO: РџРћР›РЈР§РђРўР¬ ID HL РїРѕ РЅР°Р·РІР°РЅРёСЋ С‚Р°Р±Р»РёС†С‹.
 		
-		$requestHL = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('order' => array('NAME'), 'filter' => array("TABLE_NAME" => array("reaspekt_geobase_cities","reaspekt_geobase_codeip"))));
+		$requestHL = \Bitrix\Highloadblock\HighloadBlockTable::getList(array('order' => array('NAME'), 'filter' => array("TABLE_NAME" => array("geo_base_cities","geo_base_codeip"))));
 		
 		while ($rowHL = $requestHL->fetch()){
 			if ($DB->TableExists($rowHL["TABLE_NAME"])) {
@@ -159,11 +163,11 @@ if ($strAction == "UPDATE"){
 		}
 	}
     
-    //Очистка HL для обновления
+    //РћС‡РёСЃС‚РєР° HL РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ
 	if ($_REQUEST["drop_t"] == 'C') {
-        //TODO: ПОЛУЧАТЬ ID HL по названию таблицы.
+        //TODO: РџРћР›РЈР§РђРўР¬ ID HL РїРѕ РЅР°Р·РІР°РЅРёСЋ С‚Р°Р±Р»РёС†С‹.
 		
-        $arTable = array("reaspekt_geobase_cities","reaspekt_geobase_codeip");
+        $arTable = array("geo_base_cities","geo_base_codeip");
         
         foreach ($arTable as $nameSqlTable) {
             $DB->Query('TRUNCATE TABLE `' . $nameSqlTable . '`');
@@ -179,16 +183,16 @@ if ($strAction == "UPDATE"){
 			
 			$highloadBlockData = array (
 				'NAME' => 'ReaspektGeobaseCodeip',
-				'TABLE_NAME' => 'reaspekt_geobase_codeip'
+				'TABLE_NAME' => 'geo_base_codeip'
 			);
 			
-			//Создаем HL
+			//РЎРѕР·РґР°РµРј HL
 			$obResult = HL\HighloadBlockTable::add($highloadBlockData);
 			
-			//Успешное создание
+			//РЈСЃРїРµС€РЅРѕРµ СЃРѕР·РґР°РЅРёРµ
 			if ($obResult->isSuccess()) {
 				
-				//Формируем массив полей для записи в HL
+				//Р¤РѕСЂРјРёСЂСѓРµРј РјР°СЃСЃРёРІ РїРѕР»РµР№ РґР»СЏ Р·Р°РїРёСЃРё РІ HL
 				$arFieldsCodeIp = array(
 					"ACTIVE" => "boolean",
 					"BLOCK_BEGIN" => "string",
@@ -202,7 +206,7 @@ if ($strAction == "UPDATE"){
 				
 				foreach ($arFieldsCodeIp as $nameField => $typeField) {
 					$userTypeData = array(
-						'ENTITY_ID' => "HLBLOCK_".$obResult->getId(), /*это id highload блока*/
+						'ENTITY_ID' => "HLBLOCK_".$obResult->getId(), /*СЌС‚Рѕ id highload Р±Р»РѕРєР°*/
 						'FIELD_NAME' => "UF_".$nameField,
 						'USER_TYPE_ID' => $typeField,
 						'MANDATORY' => 'N',
@@ -227,7 +231,7 @@ if ($strAction == "UPDATE"){
 						$userTypeData["SETTINGS"]["DISPLAY"] = "CHECKBOX";
 					}
 					
-					//Добавляем поля в HL
+					//Р”РѕР±Р°РІР»СЏРµРј РїРѕР»СЏ РІ HL
 					$userTypeId = $userTypeEntity->Add( $userTypeData );
 					
 				}
@@ -241,7 +245,7 @@ if ($strAction == "UPDATE"){
 						."UF_COUNTRY_CODE, "
 						."UF_CITY_ID";
 			while (!feof ($f)) {
-				if (TIMEOUT > 0 && (reaspekt_geobase_getmicrotime() - $start_time) > TIMEOUT) {
+				if (TIMEOUT > 0 && (geo_base_getmicrotime() - $start_time) > TIMEOUT) {
 					$bFinished = False;
 					break;
 				}
@@ -263,7 +267,7 @@ if ($strAction == "UPDATE"){
 					}
 				}
 			}
-			$DB->Query('INSERT INTO reaspekt_geobase_codeip ('.$strFields.') VALUES '.$strValues);
+			$DB->Query('INSERT INTO geo_base_codeip ('.$strFields.') VALUES '.$strValues);
 			SetCurrentProgress (ftell($f), $fileSize);
 			if ($bFinished){
 				$response = array(
@@ -273,7 +277,7 @@ if ($strAction == "UPDATE"){
 					"FILENAME"  => urlencode(basename("cities")),
 					"SEEK"	  => 0,
 					"DROP_T"	=> "N",
-					"MES"	   => iconv("cp1251", "UTF-8", Loc::getMessage('REASPEKT_GEOBASE_TABLE_CODEIP_UPDATED'))
+					"MES"	   => iconv("cp1251", "UTF-8", Loc::getMessage('GEOBASE_TABLE_CODEIP_UPDATED'))
 				);
 			}else {
 				$response = array(
@@ -298,20 +302,20 @@ if ($strAction == "UPDATE"){
 			$f = fopen($_SERVER["DOCUMENT_ROOT"].$FPath, 'r');
 			$_REQUEST["seek"] ? fseek($f, $_REQUEST["seek"]) : false;
 		
-			if(!$DB->TableExists('reaspekt_geobase_cities')){
+			if(!$DB->TableExists('geo_base_cities')){
 				
 				$highloadBlockData = array (
 					'NAME' => 'ReaspektGeobaseCities',
-					'TABLE_NAME' => 'reaspekt_geobase_cities'
+					'TABLE_NAME' => 'geo_base_cities'
 				);
 				
-				//Создаем HL
+				//РЎРѕР·РґР°РµРј HL
 				$obResult = HL\HighloadBlockTable::add($highloadBlockData);
 				
-				//Успешное создание
+				//РЈСЃРїРµС€РЅРѕРµ СЃРѕР·РґР°РЅРёРµ
 				if ($obResult->isSuccess()) {
 					
-					//Формируем массив полей для записи в HL
+					//Р¤РѕСЂРјРёСЂСѓРµРј РјР°СЃСЃРёРІ РїРѕР»РµР№ РґР»СЏ Р·Р°РїРёСЃРё РІ HL
 					$arFieldsCodeIp = array(
 						"XML_ID" => "integer",
 						"ACTIVE" => "boolean",
@@ -326,7 +330,7 @@ if ($strAction == "UPDATE"){
 					
 					foreach ($arFieldsCodeIp as $nameField => $typeField) {
 						$userTypeData = array(
-							'ENTITY_ID' => "HLBLOCK_".$obResult->getId(), /*это id highload блока*/
+							'ENTITY_ID' => "HLBLOCK_".$obResult->getId(), /*СЌС‚Рѕ id highload Р±Р»РѕРєР°*/
 							'FIELD_NAME' => "UF_".$nameField,
 							'USER_TYPE_ID' => $typeField,
 							'MANDATORY' => 'N',
@@ -358,7 +362,7 @@ if ($strAction == "UPDATE"){
 							$userTypeData["SETTINGS"]["MAX_VALUE"] = "0";
 						}
 						
-						//Добавляем поля в HL
+						//Р”РѕР±Р°РІР»СЏРµРј РїРѕР»СЏ РІ HL
 						$userTypeId = $userTypeEntity->Add( $userTypeData );
 						
 					}
@@ -376,7 +380,7 @@ if ($strAction == "UPDATE"){
 							."UF_LONGITUDE_CITY";
 			
 			while (!feof ($f)) {
-				if (TIMEOUT > 0 && (reaspekt_geobase_getmicrotime() - $start_time) > TIMEOUT) {
+				if (TIMEOUT > 0 && (geo_base_getmicrotime() - $start_time) > TIMEOUT) {
 					$bFinished = False;
 					break;
 				}
@@ -395,7 +399,7 @@ if ($strAction == "UPDATE"){
                 }
 			}
             
-			$DB->Query('INSERT INTO reaspekt_geobase_cities ('.$strFields.') VALUES '.$strValues);
+			$DB->Query('INSERT INTO geo_base_cities ('.$strFields.') VALUES '.$strValues);
 			
 			SetCurrentProgress (ftell($f), $fileSize);
 			
@@ -403,9 +407,9 @@ if ($strAction == "UPDATE"){
 				$response = array(
 					"STATUS"	=> 0,
 					"PROGRESS"  => 100,
-					"MES"	   => iconv("cp1251", "UTF-8", Loc::getMessage('REASPEKT_GEOBASE_TABLE_CODEIP_UPDATED'))
+					"MES"	   => iconv("cp1251", "UTF-8", Loc::getMessage('GEOBASE_TABLE_CODEIP_UPDATED'))
 				);
-                CAdminNotify::DeleteByModule("reaspekt.geobase");
+                CAdminNotify::DeleteByModule("geo.base");
 			} else {
 				$response = array(
 					"STATUS"	=> 1,
@@ -431,7 +435,7 @@ function LoadFile ($strRequestedUrl, $strFilename, $iTimeOut){
 		global $strUserAgent;
 		$iTimeOut = IntVal($iTimeOut);
 		if ($iTimeOut > 0)
-			$start_time = reaspekt_geobase_getmicrotime ();
+			$start_time = geo_base_getmicrotime ();
 		$strRealUrl = $strRequestedUrl;
 		$iStartSize = 0;
 
@@ -610,7 +614,7 @@ function LoadFile ($strRequestedUrl, $strFilename, $iTimeOut){
 		$downloadsize = (double)$iStartSize;
 		SetCurrentStatus (Loc::getMessage ("LOADER_LOAD_LOADING"));
 		while (!feof ($socketHandle)) {
-			if ($iTimeOut > 0 && (reaspekt_geobase_getmicrotime() - $start_time) > $iTimeOut) {
+			if ($iTimeOut > 0 && (geo_base_getmicrotime() - $start_time) > $iTimeOut) {
 				$bFinished = False;
 				break;
 			}
@@ -655,7 +659,7 @@ function SetCurrentProgress($cur, $total = 0) {
 
 	$status = $val;
 }
-function reaspekt_geobase_getmicrotime() {
+function geo_base_getmicrotime() {
 	list($usec, $sec) = explode(" ", microtime());
 	return ((float)$usec + (float)$sec);
 }
@@ -669,10 +673,10 @@ function json_encode_cyr($str) {
 		'\u0448','\u0429','\u0449','\u042a','\u044a','\u042b','\u044b','\u042c','\u044c',
 		'\u042d','\u044d','\u042e','\u044e','\u042f','\u044f');
 
-	$arr_replace_cyr = array('false', 'А', 'а', 'Б', 'б', 'В', 'в', 'Г', 'г', 'Д', 'д', 'Е', 'е',
-		'Ё', 'ё', 'Ж','ж','З','з','И','и','Й','й','К','к','Л','л','М','м','Н','н','О','о',
-		'П','п','Р','р','С','с','Т','т','У','у','Ф','ф','Х','х','Ц','ц','Ч','ч','Ш','ш',
-		'Щ','щ','Ъ','ъ','Ы','ы','Ь','ь','Э','э','Ю','ю','Я','я');
+	$arr_replace_cyr = array('false', 'Рђ', 'Р°', 'Р‘', 'Р±', 'Р’', 'РІ', 'Р“', 'Рі', 'Р”', 'Рґ', 'Р•', 'Рµ',
+		'РЃ', 'С‘', 'Р–','Р¶','Р—','Р·','Р','Рё','Р™','Р№','Рљ','Рє','Р›','Р»','Рњ','Рј','Рќ','РЅ','Рћ','Рѕ',
+		'Рџ','Рї','Р ','СЂ','РЎ','СЃ','Рў','С‚','РЈ','Сѓ','Р¤','С„','РҐ','С…','Р¦','С†','Р§','С‡','РЁ','С€',
+		'Р©','С‰','РЄ','СЉ','Р«','С‹','Р¬','СЊ','Р­','СЌ','Р®','СЋ','РЇ','СЏ');
 
 	$str1 = json_encode($str, JSON_FORCE_OBJECT);
 	$str2 = str_replace($arr_replace_utf,$arr_replace_cyr,$str1);

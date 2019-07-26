@@ -1,10 +1,6 @@
 <?
 /**
- * Company developer: REASPEKT
- * Developer: adel yusupov
- * Site: http://www.reaspekt.ru
- * E-mail: adel@reaspekt.ru
- * @copyright (c) 2016 REASPEKT
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
  */
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Application;
@@ -12,14 +8,14 @@ use Bitrix\Main\Web\Cookie;
 
 class ReaspGeoIP {
 	
-	const MID = "reaspekt.geobase";
+	const MID = "geo.base";
     
     function StatusTabelDB() {
         global $DB;
         
         $arResult = false;
         
-        if ($DB->TableExists('reaspekt_geobase_codeip') && $DB->TableExists('reaspekt_geobase_cities')) {
+        if ($DB->TableExists('geo_base_codeip') && $DB->TableExists('geo_base_cities')) {
             $arResult = true;
         }
         
@@ -48,7 +44,7 @@ class ReaspGeoIP {
         
         if (ReaspGeoIP::StatusTabelDB()) {
             $data = $DB->Query("
-                SELECT * FROM `reaspekt_geobase_cities` 
+                SELECT * FROM `geo_base_cities` 
                 WHERE `UF_NAME` like '" . $DB->ForSql($strCityName) . "%'
             "
 			);
@@ -115,7 +111,7 @@ class ReaspGeoIP {
         
         if (ReaspGeoIP::StatusTabelDB() == "Y") {
             $data = $DB->Query("
-                SELECT * FROM `reaspekt_geobase_cities` 
+                SELECT * FROM `geo_base_cities` 
                 WHERE `UF_XML_ID` = " . $strCityId
 			);
             
@@ -169,7 +165,7 @@ class ReaspGeoIP {
         
         if (ReaspGeoIP::StatusTabelDB()) {
             $data = $DB->Query("
-                SELECT * FROM `reaspekt_geobase_cities` 
+                SELECT * FROM `geo_base_cities` 
                 WHERE `ID` = " . $strCityId
 			);
             
@@ -222,7 +218,7 @@ class ReaspGeoIP {
         
         if (ReaspGeoIP::StatusTabelDB()) {
             $data = $DB->Query("
-                SELECT * FROM `reaspekt_geobase_cities` 
+                SELECT * FROM `geo_base_cities` 
                 WHERE `UF_NAME` = " . $strCityName
 			);
             
@@ -263,7 +259,7 @@ class ReaspGeoIP {
         
         if (ReaspGeoIP::StatusTabelDB()) {
             $data = $DB->Query("
-                SELECT * FROM `reaspekt_geobase_cities` 
+                SELECT * FROM `geo_base_cities` 
                 WHERE `ID` = " . $DB->ForSql($сityId) . "
             "
 			);
@@ -286,7 +282,7 @@ class ReaspGeoIP {
 		
 		$arResult = "N";
 		
-		$strData = $APPLICATION->get_cookie("REASPEKT_GEOBASE_SAVE");
+		$strData = $APPLICATION->get_cookie("GEOBASE_SAVE");
 		
 		if ($strData == "Y") {
 			$arResult = "Y";
@@ -300,7 +296,7 @@ class ReaspGeoIP {
 		
 		$arResult["STATUS"] = "Y";
 		
-		$APPLICATION->set_cookie("REASPEKT_GEOBASE_SAVE", "Y", time() + 86400); // 60*60*24
+		$APPLICATION->set_cookie("GEOBASE_SAVE", "Y", time() + 86400); // 60*60*24
 		
 		return json_encode($arResult);
 	}
@@ -328,9 +324,9 @@ class ReaspGeoIP {
             //переводим в формат json для записи в куки
             $strData = ReaspGeoIP::CodeJSON($arData);
             
-            $_SESSION["REASPEKT_GEOBASE"] = $arData;
+            $_SESSION["GEOBASE"] = $arData;
             
-            $APPLICATION->set_cookie("REASPEKT_GEOBASE", $strData, time() + 31104000); // 60*60*24*30*12
+            $APPLICATION->set_cookie("GEOBASE", $strData, time() + 31104000); // 60*60*24*30*12
             
             $arResult["STATUS"] = "Y";
         }
@@ -341,14 +337,14 @@ class ReaspGeoIP {
 	function GetAddr() {
 		
 		global $APPLICATION;
-        $strData = $APPLICATION->get_cookie("REASPEKT_GEOBASE");
+        $strData = $APPLICATION->get_cookie("GEOBASE");
         
 		//Если сессии нет
 		if (
             !$strData
-            || !isset($_SESSION["REASPEKT_GEOBASE"]) 
-            || !is_array($_SESSION["REASPEKT_GEOBASE"]) 
-            || empty($_SESSION["REASPEKT_GEOBASE"])
+            || !isset($_SESSION["GEOBASE"])
+            || !is_array($_SESSION["GEOBASE"])
+            || empty($_SESSION["GEOBASE"])
         
         ) {
             
@@ -356,7 +352,7 @@ class ReaspGeoIP {
 			$ip = ReaspGeoIP::getUserHostIP();
 			
             //Проверяем  Куки
-			$last_ip = $APPLICATION->get_cookie("REASPEKT_LAST_IP");
+			$last_ip = $APPLICATION->get_cookie("LAST_IP");
 			
             
             $arData = array();
@@ -372,15 +368,15 @@ class ReaspGeoIP {
                 $strData = ReaspGeoIP::CodeJSON($arData);
                 
                 //пишем куки
-                $APPLICATION->set_cookie("REASPEKT_LAST_IP", $ip, time() + 31104000); // 60*60*24*30*12
-                $APPLICATION->set_cookie("REASPEKT_GEOBASE", $strData, time() + 31104000); // 60*60*24*30*12
+                $APPLICATION->set_cookie("LAST_IP", $ip, time() + 31104000); // 60*60*24*30*12
+                $APPLICATION->set_cookie("GEOBASE", $strData, time() + 31104000); // 60*60*24*30*12
 				
 			}
             
-			$_SESSION["REASPEKT_GEOBASE"] = $arData;
+			$_SESSION["GEOBASE"] = $arData;
 		}
 				
-		return $_SESSION["REASPEKT_GEOBASE"];
+		return $_SESSION["GEOBASE"];
 	}
 	
 	function GetDataIp($ip = "") {
@@ -516,9 +512,9 @@ class ReaspGeoIP {
 			$arIP	= explode('.', $ip);
 			$codeIP = $arIP[0] * pow(256, 3) + $arIP[1] * pow(256, 2) + $arIP[2] * 256 + $arIP[3];
 			
-			$data = $DB->Query("SELECT * FROM reaspekt_geobase_codeip
-					INNER JOIN reaspekt_geobase_cities ON reaspekt_geobase_codeip.UF_CITY_ID = reaspekt_geobase_cities.UF_XML_ID
-					WHERE reaspekt_geobase_codeip.UF_BLOCK_BEGIN <= " . $DB->ForSql($codeIP) . " AND " . $DB->ForSql($codeIP) . " <= reaspekt_geobase_codeip.UF_BLOCK_END"
+			$data = $DB->Query("SELECT * FROM geo_base_codeip
+					INNER JOIN geo_base_cities ON geo_base_codeip.UF_CITY_ID = geo_base_cities.UF_XML_ID
+					WHERE geo_base_codeip.UF_BLOCK_BEGIN <= " . $DB->ForSql($codeIP) . " AND " . $DB->ForSql($codeIP) . " <= geo_base_codeip.UF_BLOCK_END"
 			);
             
 			$arData = $data->Fetch();
@@ -536,9 +532,9 @@ class ReaspGeoIP {
         
 		global $DB;
 					
-		if($DB->TableExists('reaspekt_geobase_cities')){
+		if($DB->TableExists('geo_base_cities')){
 			//через таблицу
-			$data = $DB->Query("SELECT * FROM `reaspekt_geobase_cities`
+			$data = $DB->Query("SELECT * FROM `geo_base_cities`
 					WHERE ID = '" . $DB->ForSql($id) . "'"
 			);
             
@@ -559,9 +555,9 @@ class ReaspGeoIP {
 		global $DB;
 		$arData = array();
 		
-		if($DB->TableExists('reaspekt_geobase_cities')){
+		if($DB->TableExists('geo_base_cities')){
 			//через таблицу
-			$data = $DB->Query("SELECT * FROM `reaspekt_geobase_cities`
+			$data = $DB->Query("SELECT * FROM `geo_base_cities`
 					WHERE UF_NAME = '" . $DB->ForSql($strName) . "'"
 			);
             

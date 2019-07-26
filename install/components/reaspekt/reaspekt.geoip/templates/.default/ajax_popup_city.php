@@ -1,4 +1,8 @@
 <?
+/**
+ * Copyright (c) 26/7/2019 Created By/Edited By ASDAFF asdaff.asad@yandex.ru
+ */
+
 define('NO_KEEP_STATISTIC', true);
 define('NO_AGENT_STATISTIC', true);
 define('NO_AGENT_CHECK', true);
@@ -9,7 +13,7 @@ use Bitrix\Main\Config\Option;
 
 Loc::loadMessages(__FILE__);
 
-$module_id = "reaspekt.geobase";
+$module_id = "geo.base";
 
 if (!CModule::IncludeModule($module_id)) {
     ShowError("Error! Module no install");
@@ -22,10 +26,10 @@ $arResult["DEFAULT_CITY"] = ReaspGeoIP::DefaultCityList();
 ?>
 <div class="reaspektGeobaseWrapperPopup">
 	<div class="reaspektGeobaseFind">
-		<input type="text" onkeyup="objJCReaspektGeobase.inpKeyReaspektGeobase(event);" autocomplete="off" placeholder="<?=Loc::getMessage("REASPEKT_INPUT_ENTER_CITY");?>" name="reaspekt_geobase_search" id="reaspektGeobaseSearch">
+		<input type="text" onkeyup="objJCReaspektGeobase.inpKeyReaspektGeobase(event);" autocomplete="off" placeholder="<?=Loc::getMessage("INPUT_ENTER_CITY");?>" name="geo_base_search" id="reaspektGeobaseSearch">
 	</div>
 	
-	<div class="reaspektGeobaseTitle"><?=Loc::getMessage("REASPEKT_TITLE_ENTER_CITY");?>:</div>				
+	<div class="reaspektGeobaseTitle"><?=Loc::getMessage("TITLE_ENTER_CITY");?>:</div>
 	<div class="reaspektGeobaseCities reaspekt_clearfix">
 		<div class="reaspekt_row">
 		<?
@@ -44,7 +48,7 @@ $arResult["DEFAULT_CITY"] = ReaspGeoIP::DefaultCityList();
 					<?if($arData["CITY"] == $arCity["CITY"]):?>
 					<strong><?=$arCity["CITY"]?></strong>
 					<?else:?>
-					<a onclick="objJCReaspektGeobase.onClickReaspektGeobase('<?=$arCity["CITY"]?>'); return false;" id="reaspekt_geobase_list_<?=$cell?>" title="<?=$arCity["CITY"]?>" href="javascript:void(0);"><?=$arCity["CITY"]?></a>
+					<a onclick="objJCReaspektGeobase.onClickReaspektGeobase('<?=$arCity["CITY"]?>'); return false;" id="geo_base_list_<?=$cell?>" title="<?=$arCity["CITY"]?>" href="javascript:void(0);"><?=$arCity["CITY"]?></a>
 					<?endif;?>
 				</div>
 				<?
